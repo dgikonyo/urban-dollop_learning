@@ -2,15 +2,20 @@ package com.kcbgroup.learning.jugtours.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "user_group")
+@SQLDelete(sql = "UPDATE group SET deleted=true WHERE id = ?")
+@Where(clause = "deleted=false")
 public class Group {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -21,6 +26,8 @@ public class Group {
     private String stateOrProvince;
     private String country;
     private String postalCode;
+
+    private boolean deleted = Boolean.FALSE;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private User user;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -105,6 +112,14 @@ public class Group {
 
     public void setEvents(Set<Event> events) {
         this.events = events;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override
