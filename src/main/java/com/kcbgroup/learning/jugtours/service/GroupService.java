@@ -52,7 +52,16 @@ public class GroupService {
         return null;
     }
 
-    public void deleteGroup(Long groupId) {
-        groupRepository.deleteById(groupId);
+    public Group deleteGroup(Long groupId) {
+        Optional<Group> groupData = groupRepository.findById(groupId);
+
+        if (groupData.isPresent()) {
+            Group _group = groupData.get();
+            _group.setDeleted(true);
+
+            return groupRepository.save(_group);
+        }
+
+        return null;
     }
 }

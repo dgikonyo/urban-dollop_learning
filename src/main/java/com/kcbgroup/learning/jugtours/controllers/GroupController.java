@@ -1,7 +1,6 @@
 package com.kcbgroup.learning.jugtours.controllers;
 
 import com.kcbgroup.learning.jugtours.models.Group;
-import com.kcbgroup.learning.jugtours.repository.GroupRepository;
 import com.kcbgroup.learning.jugtours.service.GroupService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -11,12 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -88,12 +82,21 @@ public class GroupController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-//
-//    @DeleteMapping("/group/{id}")
-//    public ResponseEntity<?> deleteGroup(@PathVariable Long id) {
-//        log.info("Request to delete group: {}", id);
-//        groupRepository.deleteById(id);
-//
-//        return ResponseEntity.ok().build();
-//    }
+
+    @DeleteMapping("/group/{id}")
+    public ResponseEntity<HttpStatus> deleteGroup(@PathVariable("id") Long id) {
+        try {
+            log.info("Request to delete group: {}", id);
+            Group groupData = groupService.deleteGroup(id);
+
+            if (groupData != null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            log.error("Error deleting information: {}", e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
