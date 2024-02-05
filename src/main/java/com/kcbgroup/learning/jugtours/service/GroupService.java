@@ -5,6 +5,7 @@ import com.kcbgroup.learning.jugtours.repository.GroupRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -35,7 +36,7 @@ public class GroupService {
         return groups;
     }
 
-    public Group updateGroup(Long groupId, Group group) {
+    public Group updateGroup(@PathVariable("id") Long groupId, @RequestBody Group group) {
         Optional<Group> groupData = groupRepository.findById(groupId);
 
         if (groupData.isPresent()) {
