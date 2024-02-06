@@ -46,6 +46,8 @@ public class GroupService {
             _group.setCountry(group.getCountry());
             _group.setStateOrProvince(group.getStateOrProvince());
             _group.setPostalCode(group.getPostalCode());
+            _group.setEvents(group.getEvents());
+            _group.setAddress(group.getAddress());
 
             return groupRepository.save(_group);
         }
