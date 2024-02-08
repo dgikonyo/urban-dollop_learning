@@ -8,8 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -20,10 +23,10 @@ public class GroupController {
     GroupService groupService = new GroupService();
 
     @GetMapping("/groups")
-    public ResponseEntity<List<Group>> getAllGroups() {
+    public ResponseEntity<List<Group>> getAllGroups(Principal principal) {
         try {
             log.info("Request to get all groups");
-            List<Group> groups = groupService.listAllGroups();
+            List<Group> groups = groupService.listAllGroups(principal);
 
             if (groups == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -54,10 +57,10 @@ public class GroupController {
     }
 
     @PostMapping("/group")
-    ResponseEntity<Group> createGroup(@Valid @RequestBody Group group) {
+    ResponseEntity<Group> createGroup(@Valid @RequestBody Group group, @AuthenticationPrincipal OAuth2User principal) {
         try {
             log.info("Request to create group: {}", group);
-            Group _group = groupService.createGroup(group);
+            Group _group = groupService.createGroup(group, principal);
 
             return new ResponseEntity<>(_group, HttpStatus.CREATED);
         } catch (Exception e) {

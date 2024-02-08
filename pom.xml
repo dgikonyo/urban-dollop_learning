@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.2</version>
+		<version>3.2.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.kcbgroup</groupId>
@@ -44,6 +44,11 @@
 			<groupId>com.okta.spring</groupId>
 			<artifactId>okta-spring-boot-starter</artifactId>
 			<version>3.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.21.0</version>
 		</dependency>
 	</dependencies>
 
