@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.MessageFormat;
@@ -17,6 +18,7 @@ import java.text.MessageFormat;
 import static java.util.Map.of;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
     private final ClientRegistration registration;
 
@@ -24,7 +26,7 @@ public class UserController {
         this.registration = registrationRepository.findByRegistrationId("okta");
     }
 
-    @GetMapping("/api/user")
+    @GetMapping("/user")
     public ResponseEntity<?> getUser(@AuthenticationPrincipal OAuth2User user) {
         if (user == null) {
             return new ResponseEntity<>("", HttpStatus.OK);
@@ -33,7 +35,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/api/logout")
+    @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         // send logout URL to client so that they can initiate logout
         var issueUri = registration.getProviderDetails().getIssuerUri();
