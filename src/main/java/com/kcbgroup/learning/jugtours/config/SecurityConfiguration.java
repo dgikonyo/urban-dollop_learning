@@ -61,23 +61,23 @@ public class SecurityConfiguration {
 
     private ClientRegistration.Builder clientRegistrationBuilder() {
         Map<String, Object> metadata = new HashMap<>();
-        metadata.put("end_session_endpoint", "https://example.org/logout");
+        metadata.put("end_session_endpoint", "http://localhost:8080/api/logout");
 
-        return ClientRegistration.withRegistrationId("oidc")
-                .issuerUri("{baseUrl}")
-                .redirectUri("{baseUrl}/{action}/oauth2/ckode/{registrationId}")
+        return ClientRegistration.withRegistrationId("okta")
+                .issuerUri(issuerUri)
+                .redirectUri("http://localhost:4200/login/oauth2/code/okta")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .scope("read:user")
-                .authorizationUri("https://example.org/login/oauth/authorize")
-                .tokenUri("https://example.org/login/oauth/access_token")
-                .jwkSetUri("https://example.org/oauth/jwk")
-                .userInfoUri("https://api.example.org/api/user")
+                .authorizationUri(issuerUri + "/login/oauth/authorize")
+                .tokenUri(issuerUri + "/login/oauth/access_token")
+                .jwkSetUri(issuerUri + "/oauth/jwk")
+                .userInfoUri("http://localhost:8080/api/user")
                 .providerConfigurationMetadata(metadata)
                 .userNameAttributeName("id")
-                .clientName("Client Name")
-                .clientId("client-id")
-                .clientSecret("client-secret");
+                .clientName("Baraza Spring Blog")
+                .clientId(clientId)
+                .clientSecret(clientSecret);
     }
 
     @Bean
