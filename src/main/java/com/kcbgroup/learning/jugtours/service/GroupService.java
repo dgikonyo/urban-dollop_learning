@@ -39,8 +39,7 @@ public class GroupService {
         Optional<User> user = userRepository.findById(userId);
         group.setUser(user.orElse(new User(userId, details.get("name").toString(), details.get("email").toString())));
 
-        Group result = groupRepository.save(group);
-        return result;
+        return groupRepository.save(group);
     }
 
     public Group getGroupById(Long groupId) {
