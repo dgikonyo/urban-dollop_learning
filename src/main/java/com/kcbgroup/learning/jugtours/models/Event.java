@@ -28,4 +28,3 @@ public class Event {
         this.description = description;
     }
 }
-{https://github.com/ffc1e12/kopo-kopo-transaction-management-backend-lii-83ahc-65bc3g/pull/1/checks}
