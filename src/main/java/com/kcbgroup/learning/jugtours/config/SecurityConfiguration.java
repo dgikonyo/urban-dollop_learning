@@ -30,11 +30,11 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 public class SecurityConfiguration {
 
-    @Value("${okta.oauth2.okta-oauth2-issuer}")
+    @Value("${okta.oauth2.issuer}")
     private String issuerUri;
-    @Value("${okta.oauth2.okta-oauth2-client-id}")
+    @Value("${okta.oauth2.client-id}")
     private String clientId;
-    @Value("${okta.oauth2.okta-oauth2-client-secret}")
+    @Value("${okta.oauth2.client-secret}")
     private String clientSecret;
     @Value("${okta.oauth2.provider}")
     private String oauthProvider;
