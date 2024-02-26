@@ -72,19 +72,19 @@ public class SecurityConfiguration {
         Map<String, Object> metadata = new HashMap<>();
         metadata.put("end_session_endpoint", "http://localhost:8080/api/logout");
 
-        return ClientRegistration.withRegistrationId(oauthProvider)
+        return ClientRegistration.withRegistrationId("okta")
                 .issuerUri(issuerUri)
-                .redirectUri("http://localhost:8080/login/oauth2/code/okta")
+                .redirectUri(issuerUri + "/login/oauth2/code/okta")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .scope("read:user")
-                .authorizationUri("https://dev-b71qyu647q06c1zb.us.auth0.com/login/oauth/authorize")
-                .tokenUri("https://dev-b71qyu647q06c1zb.us.auth0.com/login/oauth/access_token")
-                .jwkSetUri("https://dev-b71qyu647q06c1zb.us.auth0.com/oauth/jwk")
+                .authorizationUri("http://localhost:8080/login/oauth/authorize")
+                .tokenUri("http://localhost:8080/login/oauth/access_token")
+                .jwkSetUri("http://localhost:8080/oauth/jwk")
                 .userInfoUri("http://localhost:8080/api/user")
                 .providerConfigurationMetadata(metadata)
                 .userNameAttributeName("id")
-                .clientName("Okta")
+                .clientName("Baraza Spring Blog")
                 .clientId(clientId)
                 .clientSecret(clientSecret);
     }
@@ -99,3 +99,5 @@ public class SecurityConfiguration {
         return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
     }
 }
+
+
